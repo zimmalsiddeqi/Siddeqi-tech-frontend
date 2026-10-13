@@ -3,46 +3,51 @@
 // All 20+ routes mapped to backend API contract
 // ============================================
 
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import { ToastProvider } from './components/Toast'
 import { ProtectedRoute, PublicOnlyRoute } from './components/ProtectedRoute'
 import { PublicLayout, StudentLayout, AdminLayout } from './components/Layout'
+import LoadingSpinner from './components/LoadingSpinner'
 
-// Public Pages
+// Instant Home Page
 import Home from './pages/public/Home'
-import Courses from './pages/public/Courses'
-import CourseDetail from './pages/public/CourseDetail'
-import Packages from './pages/public/Packages'
 
-// Auth Pages
-import Login from './pages/auth/Login'
-import Register from './pages/auth/Register'
+// Lazy-loaded Public Pages
+const Courses = lazy(() => import('./pages/public/Courses'))
+const CourseDetail = lazy(() => import('./pages/public/CourseDetail'))
+const Packages = lazy(() => import('./pages/public/Packages'))
 
-// Student Pages
-import StudentDashboard from './pages/student/Dashboard'
-import StudentLiveClasses from './pages/student/LiveClasses'
-import Classroom from './pages/student/Classroom'
-import StudentRecordings from './pages/student/Recordings'
-import StudentEnrollments from './pages/student/Enrollments'
-import StudentProfile from './pages/student/Profile'
+// Lazy-loaded Auth Pages
+const Login = lazy(() => import('./pages/auth/Login'))
+const Register = lazy(() => import('./pages/auth/Register'))
 
-// Admin Pages
-import AdminDashboard from './pages/admin/Dashboard'
-import AdminCourses from './pages/admin/Courses'
-import AdminPackages from './pages/admin/Packages'
-import AdminEnrollments from './pages/admin/Enrollments'
-import AdminStudents from './pages/admin/Students'
-import AdminLiveClasses from './pages/admin/LiveClasses'
-import AdminRecordings from './pages/admin/Recordings'
-import AdminProfile from './pages/admin/Profile'
+// Lazy-loaded Student Pages
+const StudentDashboard = lazy(() => import('./pages/student/Dashboard'))
+const StudentLiveClasses = lazy(() => import('./pages/student/LiveClasses'))
+const Classroom = lazy(() => import('./pages/student/Classroom'))
+const StudentRecordings = lazy(() => import('./pages/student/Recordings'))
+const StudentEnrollments = lazy(() => import('./pages/student/Enrollments'))
+const StudentProfile = lazy(() => import('./pages/student/Profile'))
+
+// Lazy-loaded Admin Pages
+const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'))
+const AdminCourses = lazy(() => import('./pages/admin/Courses'))
+const AdminPackages = lazy(() => import('./pages/admin/Packages'))
+const AdminEnrollments = lazy(() => import('./pages/admin/Enrollments'))
+const AdminStudents = lazy(() => import('./pages/admin/Students'))
+const AdminLiveClasses = lazy(() => import('./pages/admin/LiveClasses'))
+const AdminRecordings = lazy(() => import('./pages/admin/Recordings'))
+const AdminProfile = lazy(() => import('./pages/admin/Profile'))
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <ToastProvider />
-        <Routes>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
           {/* ---- Public Routes ---- */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />} />
@@ -125,6 +130,7 @@ export default function App() {
           {/* ---- Fallback ---- */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </Suspense>
       </AuthProvider>
     </BrowserRouter>
   )

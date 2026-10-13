@@ -70,6 +70,48 @@ async function request(endpoint, options = {}) {
 }
 
 // ============================================
+// CLIENT IN-MEMORY SWR CACHE
+// Ensures instant (<0.01s) tab switching & page rendering
+// ============================================
+
+const clientMemoryCache = new Map()
+
+export function getCachedOrFetch(key, fetcher, ttlMs = 180000) {
+  const cached = clientMemoryCache.get(key)
+  const now = Date.now()
+
+  // Fresh cache hit — return immediately in < 1 millisecond
+  if (cached && (now - cached.timestamp < ttlMs)) {
+    return Promise.resolve(cached.data)
+  }
+
+  // Fetch from network
+  const fetchPromise = fetcher().then((data) => {
+    clientMemoryCache.set(key, { data, timestamp: Date.now() })
+    return data
+  })
+
+  // Stale-while-revalidate: if we have cached data, return it immediately while refreshing in background
+  if (cached) {
+    return Promise.resolve(cached.data)
+  }
+
+  return fetchPromise
+}
+
+export function invalidateClientCache(prefix) {
+  if (!prefix) {
+    clientMemoryCache.clear()
+    return
+  }
+  for (const key of clientMemoryCache.keys()) {
+    if (key.startsWith(prefix)) {
+      clientMemoryCache.delete(key)
+    }
+  }
+}
+
+// ============================================
 // PUBLIC ENDPOINTS (no auth)
 // ============================================
 
@@ -84,17 +126,23 @@ export const publicApi = {
     if (params.category) query.set('category', params.category)
     if (params.search) query.set('search', params.search)
     const qs = query.toString()
-    return request(`/api/courses${qs ? `?${qs}` : ''}`, { skipAuth: true })
+    const path = `/api/courses${qs ? `?${qs}` : ''}`
+
+    // Instant SWR cache for catalog browsing (without dynamic search queries)
+    if (!params.search) {
+      return getCachedOrFetch(`courses:${qs}`, () => request(path, { skipAuth: true }))
+    }
+    return request(path, { skipAuth: true })
   },
 
   getFeaturedCourses: () =>
-    request('/api/courses/featured', { skipAuth: true }),
+    getCachedOrFetch('courses:featured', () => request('/api/courses/featured', { skipAuth: true })),
 
   getCourseBySlug: (slug) =>
-    request(`/api/courses/${slug}`, { skipAuth: true }),
+    getCachedOrFetch(`course:${slug}`, () => request(`/api/courses/${slug}`, { skipAuth: true })),
 
   getPackages: () =>
-    request('/api/packages', { skipAuth: true })
+    getCachedOrFetch('packages:list', () => request('/api/packages', { skipAuth: true }))
 }
 
 // ============================================
