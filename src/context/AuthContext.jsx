@@ -4,6 +4,7 @@
 
 import { createContext, useContext, useState, useEffect } from 'react'
 import { supabase } from '../services/supabase'
+import { API_BASE } from '../services/api'
 
 const AuthContext = createContext(null)
 
@@ -21,7 +22,6 @@ export function AuthProvider({ children }) {
     }
 
     try {
-      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
       const res = await fetch(`${API_BASE}/api/me`, {
         headers: { Authorization: `Bearer ${session.access_token}` }
       })
