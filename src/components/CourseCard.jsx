@@ -35,7 +35,7 @@ export default function CourseCard({ course }) {
           {banner_url ? (
             <img
               src={banner_url}
-              alt={title}
+              alt={`${title} - Online Course Preview`}
               className="course-card-banner"
               loading="lazy"
             />

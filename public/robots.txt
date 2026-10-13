@@ -1,0 +1,20 @@
+# robots.txt for Shawkat Siddeqi Tech (https://shawkattech.vercel.app)
+User-agent: *
+Allow: /
+Allow: /courses
+Allow: /courses/*
+Allow: /packages
+Allow: /favicon.svg
+
+# Protect private portals & authenticated routes
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /portal
+Disallow: /portal/*
+Disallow: /login
+Disallow: /register
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://shawkattech.vercel.app/sitemap.xml
+Sitemap: https://shawkat-tech.up.railway.app/api/sitemap.xml

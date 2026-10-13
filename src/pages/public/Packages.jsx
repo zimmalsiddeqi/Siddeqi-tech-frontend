@@ -7,6 +7,7 @@ import { publicApi, studentApi } from '../../services/api'
 import { useAuth } from '../../context/AuthContext'
 import { toast } from '../../components/Toast'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import SEO from '../../components/SEO'
 
 export default function Packages() {
   const [packages, setPackages] = useState([])
@@ -48,8 +49,45 @@ export default function Packages() {
 
   if (loading) return <LoadingSpinner fullScreen />
 
+  const breadcrumbsSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://shawkattech.vercel.app'
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Packages',
+        item: 'https://shawkattech.vercel.app/packages'
+      }
+    ]
+  }
+
+  const packageListSchema = packages.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Course Packages and Career Bundles',
+    itemListElement: packages.map((pkg, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: pkg.name,
+      description: pkg.description || undefined
+    }))
+  } : null
+
   return (
     <section className="page-section">
+      <SEO
+        title="Course Bundles & Career Tracks | Shawkat Siddeqi Tech"
+        description="Accelerate your technical career with all-in-one course bundles and AI tracks. Get full curriculum access, mentor guidance, and verified certificates at Shawkat Siddeqi Tech."
+        canonical="/packages"
+        schema={[breadcrumbsSchema, packageListSchema].filter(Boolean)}
+      />
       <div className="container">
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 'var(--space-12)' }}>
@@ -70,10 +108,10 @@ export default function Packages() {
             <Sparkles size={14} /> Best Value
           </div>
           <h1>
-            Course <span className="gradient-text-warm">Packages</span>
+            Course <span className="gradient-text-warm">Packages</span> & Tracks
           </h1>
           <p style={{ color: 'var(--text-tertiary)', marginTop: 'var(--space-3)', fontSize: '1.05rem', maxWidth: 560, margin: 'var(--space-3) auto 0' }}>
-            Save more by bundling courses together. Get complete access to our entire AI curriculum.
+            Save more by bundling courses together. Get complete access to our entire AI and engineering curriculum.
           </p>
         </div>
 
@@ -82,7 +120,7 @@ export default function Packages() {
             <div className="empty-state-icon">
               <Package size={28} />
             </div>
-            <h3>No packages available yet</h3>
+            <h2>No packages available yet</h2>
             <p>Check back soon for bundle deals.</p>
           </div>
         ) : (
@@ -90,9 +128,9 @@ export default function Packages() {
             {/* Individual Courses */}
             {courses.length > 0 && (
               <div style={{ marginBottom: 'var(--space-12)' }}>
-                <h3 style={{ marginBottom: 'var(--space-6)', color: 'var(--text-tertiary)', fontWeight: 500, fontSize: '1rem' }}>
+                <h2 style={{ marginBottom: 'var(--space-6)', color: 'var(--text-secondary)', fontWeight: 600, fontSize: '1.25rem' }}>
                   Individual Courses
-                </h3>
+                </h2>
                 <div
                   style={{
                     display: 'grid',
@@ -102,7 +140,7 @@ export default function Packages() {
                 >
                   {courses.map((course) => (
                     <div key={course.id} className="glass-card" style={{ padding: 'var(--space-8)', display: 'flex', flexDirection: 'column' }}>
-                      <h4 style={{ marginBottom: 'var(--space-2)' }}>{course.title}</h4>
+                      <h3 style={{ marginBottom: 'var(--space-2)', fontSize: '1.15rem' }}>{course.title}</h3>
                       <p style={{ fontSize: '0.88rem', color: 'var(--text-tertiary)', marginBottom: 'var(--space-6)', flex: 1 }}>
                         {course.short_description}
                       </p>
@@ -130,9 +168,9 @@ export default function Packages() {
             {/* Bundle Packages */}
             {packages.length > 0 && (
               <div>
-                <h3 style={{ marginBottom: 'var(--space-6)', color: 'var(--text-tertiary)', fontWeight: 500, fontSize: '1rem' }}>
-                  Bundle Deals
-                </h3>
+                <h2 style={{ marginBottom: 'var(--space-6)', color: 'var(--text-secondary)', fontWeight: 600, fontSize: '1.25rem' }}>
+                  Bundle Deals & Tracks
+                </h2>
                 <div
                   style={{
                     display: 'grid',

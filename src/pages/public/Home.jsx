@@ -8,6 +8,7 @@ import {
 import { publicApi } from '../../services/api'
 import CourseCard from '../../components/CourseCard'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import SEO from '../../components/SEO'
 
 function WhatsAppIcon({ size = 20, color = 'currentColor' }) {
   return (
@@ -67,8 +68,48 @@ export default function Home() {
     }
   }, [displayCourses, loading])
 
+  const homeSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://shawkattech.vercel.app/#website',
+        'url': 'https://shawkattech.vercel.app/',
+        'name': 'Shawkat Siddeqi Tech',
+        'description': 'Master modern Web Development through AI, autonomous AI Agents with n8n, and full-stack software engineering. Live interactive online classes in Pakistan with HD cloud recordings.',
+        'potentialAction': {
+          '@type': 'SearchAction',
+          'target': 'https://shawkattech.vercel.app/courses?search={search_term_string}',
+          'query-input': 'required name=search_term_string'
+        }
+      },
+      {
+        '@type': 'EducationalOrganization',
+        '@id': 'https://shawkattech.vercel.app/#organization',
+        'name': 'Shawkat Siddeqi Tech',
+        'url': 'https://shawkattech.vercel.app/',
+        'logo': 'https://shawkattech.vercel.app/favicon.svg',
+        'description': 'Premium online education platform in Pakistan offering live interactive courses in Web Development, AI Agents, and Automation workflows.',
+        'telephone': '+923440114925',
+        'address': {
+          '@type': 'PostalAddress',
+          'addressCountry': 'PK'
+        },
+        'sameAs': [
+          'https://wa.me/923440114925'
+        ]
+      }
+    ]
+  }
+
   return (
     <>
+      <SEO
+        title="Online Courses in Pakistan | Learn Web Development & AI | Shawkat Siddeqi Tech"
+        description="Master modern Web Development through AI, autonomous AI Agents with n8n, and full-stack software engineering. Live interactive online classes in Pakistan with HD cloud recordings."
+        canonical="/"
+        schema={homeSchema}
+      />
       {/* ======== HERO SECTION ======== */}
       <section className="hero">
         {/* Floating Ambient Glowing Mesh Orbs */}
@@ -249,7 +290,7 @@ export default function Home() {
                     <item.icon size={20} />
                   </div>
                 </div>
-                <h4 style={{ fontSize: '1.05rem', marginBottom: 'var(--space-2)' }}>{item.title}</h4>
+                <h3 style={{ fontSize: '1.05rem', marginBottom: 'var(--space-2)' }}>{item.title}</h3>
                 <p style={{ fontSize: '0.875rem', color: 'var(--text-tertiary)', lineHeight: 1.6 }}>
                   {item.desc}
                 </p>
@@ -376,7 +417,7 @@ export default function Home() {
                 <div className={`stat-card-icon ${feature.color}`} style={{ marginBottom: 'var(--space-4)' }}>
                   <feature.icon size={22} />
                 </div>
-                <h4 style={{ marginBottom: 'var(--space-2)', fontSize: '1.15rem' }}>{feature.title}</h4>
+                <h3 style={{ marginBottom: 'var(--space-2)', fontSize: '1.15rem' }}>{feature.title}</h3>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-tertiary)', lineHeight: 1.65 }}>
                   {feature.desc}
                 </p>
@@ -447,53 +488,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ======== FOOTER ======== */}
-      <footer
-        style={{
-          padding: 'var(--space-10) 0',
-          borderTop: '1px solid var(--border-subtle)',
-          textAlign: 'center'
-        }}
-      >
-        <div className="container">
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-            &copy; {new Date().getFullYear()} Shawkat Siddeqi Tech. Empowering next-generation AI creators and engineers.
-          </p>
-          <div style={{ marginTop: 'var(--space-2)' }}>
-            <a
-              href="https://wa.me/923440114925"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: '#25D366',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6
-              }}
-            >
-              <WhatsAppIcon size={14} color="#25D366" />
-              <span>WhatsApp Inquiries: +92 344 0114925</span>
-            </a>
-          </div>
-        </div>
-      </footer>
-
-      {/* ======== FLOATING WHATSAPP CTA WIDGET ======== */}
-      <a
-        href="https://wa.me/923440114925?text=Hello%20Shawkat%20Tech%2C%20I%20would%20like%20to%20inquire%20about%20your%20courses."
-        target="_blank"
-        rel="noopener noreferrer"
-        className="whatsapp-float"
-        title="Chat with Shawkat Tech on WhatsApp (+92 344 0114925)"
-        aria-label="Chat on WhatsApp"
-      >
-        <WhatsAppIcon size={22} color="white" />
-        <span>Chat on WhatsApp</span>
-      </a>
     </>
   )
 }

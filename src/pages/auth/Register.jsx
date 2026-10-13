@@ -7,6 +7,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { toast } from '../../components/Toast'
+import SEO from '../../components/SEO'
 
 export default function Register() {
   const { signUp } = useAuth()
@@ -118,6 +119,12 @@ export default function Register() {
         padding: 'var(--space-8) var(--space-4)'
       }}
     >
+      <SEO
+        title="Student Registration | Shawkat Siddeqi Tech"
+        description="Create your student account to enroll in high-impact AI and modern web engineering courses with Shawkat Siddeqi Tech."
+        canonical="/register"
+        noindex={true}
+      />
       <div
         className="glass-card-strong"
         style={{

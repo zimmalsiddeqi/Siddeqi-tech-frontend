@@ -18,6 +18,7 @@ import Home from './pages/public/Home'
 const Courses = lazy(() => import('./pages/public/Courses'))
 const CourseDetail = lazy(() => import('./pages/public/CourseDetail'))
 const Packages = lazy(() => import('./pages/public/Packages'))
+const NotFound = lazy(() => import('./pages/public/NotFound'))
 
 // Lazy-loaded Auth Pages
 const Login = lazy(() => import('./pages/auth/Login'))
@@ -127,8 +128,10 @@ export default function App() {
             <Route path="/admin/profile" element={<AdminProfile />} />
           </Route>
 
-          {/* ---- Fallback ---- */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* ---- Fallback 404 ---- */}
+          <Route element={<PublicLayout />}>
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </Routes>
         </Suspense>
       </AuthProvider>

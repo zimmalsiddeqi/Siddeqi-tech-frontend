@@ -3,6 +3,7 @@ import { Search, SlidersHorizontal, BookOpen, X } from 'lucide-react'
 import { publicApi } from '../../services/api'
 import CourseCard from '../../components/CourseCard'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import SEO from '../../components/SEO'
 
 export default function Courses() {
   const [courses, setCourses] = useState([])
@@ -43,8 +44,48 @@ export default function Courses() {
     fetchCourses()
   }, [fetchCourses])
 
+  const coursesSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': 'https://shawkattech.vercel.app/'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Courses',
+            'item': 'https://shawkattech.vercel.app/courses'
+          }
+        ]
+      },
+      {
+        '@type': 'ItemList',
+        'name': 'All Online Courses & AI Programs',
+        'itemListElement': courses.map((c, i) => ({
+          '@type': 'ListItem',
+          'position': i + 1,
+          'url': `https://shawkattech.vercel.app/courses/${c.slug}`,
+          'name': c.title
+        }))
+      }
+    ]
+  }
+
   return (
-    <section className="page-section">
+    <>
+      <SEO
+        title="All Online Courses & AI Programs in Pakistan | Shawkat Siddeqi Tech"
+        description="Browse certified online tech courses in Pakistan: Web Development with AI, Autonomous AI Agents with n8n, AI Video Generation, and modern Full-Stack Engineering."
+        canonical="/courses"
+        schema={coursesSchema}
+      />
+      <section className="page-section">
       <div className="container">
         {/* Header & Search */}
         <div
@@ -185,5 +226,6 @@ export default function Courses() {
         )}
       </div>
     </section>
+    </>
   )
 }

@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Mail, Lock, Eye, EyeOff, ArrowRight, Sparkles, Loader2 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { toast } from '../../components/Toast'
+import SEO from '../../components/SEO'
 
 export default function Login() {
   const { signIn } = useAuth()
@@ -64,6 +65,12 @@ export default function Login() {
         padding: 'var(--space-8) var(--space-4)'
       }}
     >
+      <SEO
+        title="Student & Instructor Login | Shawkat Siddeqi Tech"
+        description="Sign in to your Shawkat Siddeqi Tech learning portal to access live classes, recordings, course materials, and certificates."
+        canonical="/login"
+        noindex={true}
+      />
       <div
         className="glass-card-strong"
         style={{
