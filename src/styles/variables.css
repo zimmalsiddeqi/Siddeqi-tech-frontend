@@ -1,0 +1,135 @@
+/* ============================================
+   Shawkat Siddeqi Tech — Light Luxury Design
+   Soft Glassmorphism + Mint & Peach Accents
+   ============================================ */
+
+:root {
+  /* ---- Backgrounds (Light & Airy) ---- */
+  --bg-base: #F7F9FC;
+  --bg-soft: #FFFFFF;
+  --bg-tint: #EEF2F8;
+  --bg-ambient: radial-gradient(circle at 15% 20%, rgba(167, 243, 208, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 85% 70%, rgba(254, 215, 170, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(191, 219, 254, 0.25) 0%, transparent 60%),
+                #F7F9FC;
+
+  /* ---- Glass Surfaces ---- */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-bg-strong: rgba(255, 255, 255, 0.85);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-border-hover: rgba(255, 255, 255, 0.9);
+  --glass-blur: blur(20px) saturate(180%);
+
+  /* ---- Accent Colors ---- */
+  /* Soft Mint Green (primary action) */
+  --mint: #10B981;
+  --mint-soft: #6EE7B7;
+  --mint-light: #D1FAE5;
+  --mint-glow: rgba(16, 185, 129, 0.35);
+
+  /* Warm Peach / Orange (secondary action) */
+  --peach: #FB923C;
+  --peach-soft: #FDBA74;
+  --peach-light: #FFEDD5;
+  --peach-glow: rgba(251, 146, 60, 0.35);
+
+  /* Sky Blue (info/accent) */
+  --sky: #0EA5E9;
+  --sky-soft: #7DD3FC;
+  --sky-light: #E0F2FE;
+  --sky-glow: rgba(14, 165, 233, 0.35);
+
+  /* Lavender (feature highlight) */
+  --lavender: #A78BFA;
+  --lavender-soft: #C4B5FD;
+  --lavender-light: #EDE9FE;
+  --lavender-glow: rgba(167, 139, 250, 0.35);
+
+  /* Rose (error / danger) */
+  --rose: #F43F5E;
+  --rose-light: #FFE4E6;
+
+  /* Amber (warning) */
+  --amber: #F59E0B;
+  --amber-light: #FEF3C7;
+
+  /* ---- Text Colors ---- */
+  --text-primary: #0F172A;      /* near-black for max contrast */
+  --text-secondary: #334155;    /* body dark gray */
+  --text-tertiary: #64748B;     /* muted labels */
+  --text-muted: #94A3B8;        /* placeholder */
+  --text-inverse: #FFFFFF;
+
+  /* ---- Borders ---- */
+  --border-subtle: rgba(15, 23, 42, 0.06);
+  --border-default: rgba(15, 23, 42, 0.1);
+  --border-strong: rgba(15, 23, 42, 0.15);
+
+  /* ---- Gradients ---- */
+  --gradient-mint: linear-gradient(135deg, #10B981 0%, #6EE7B7 100%);
+  --gradient-peach: linear-gradient(135deg, #FB923C 0%, #FDBA74 100%);
+  --gradient-primary: linear-gradient(135deg, #10B981 0%, #0EA5E9 50%, #A78BFA 100%);
+  --gradient-warm: linear-gradient(135deg, #FB923C 0%, #F59E0B 100%);
+  --gradient-cool: linear-gradient(135deg, #0EA5E9 0%, #A78BFA 100%);
+  --gradient-text: linear-gradient(135deg, #10B981 0%, #0EA5E9 100%);
+  --gradient-hero: linear-gradient(135deg, #10B981 0%, #0EA5E9 35%, #A78BFA 70%, #FB923C 100%);
+
+  /* ---- Shadows (Soft Lift) ---- */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 16px 48px rgba(15, 23, 42, 0.12);
+  --shadow-xl: 0 24px 64px rgba(15, 23, 42, 0.15);
+  --shadow-glow-mint: 0 8px 32px rgba(16, 185, 129, 0.3);
+  --shadow-glow-peach: 0 8px 32px rgba(251, 146, 60, 0.3);
+  --shadow-glow-sky: 0 8px 32px rgba(14, 165, 233, 0.3);
+
+  /* ---- Spacing ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ---- Radius ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* ---- Typography ---- */
+    /* ---- Typography ---- */
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* ---- Transitions ---- */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 150ms var(--ease-smooth);
+  --transition-base: 300ms var(--ease-smooth);
+  --transition-slow: 500ms var(--ease-smooth);
+  --transition-bounce: 400ms var(--ease-bounce);
+
+  /* ---- Z-Index ---- */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal-backdrop: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* ---- Layout ---- */
+  --sidebar-width: 260px;
+  --navbar-height: 76px;
+  --max-width: 1280px;
+}
