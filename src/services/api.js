@@ -5,11 +5,15 @@
 
 import { supabase } from './supabase'
 
-export const API_BASE = import.meta.env.VITE_API_BASE_URL || (
-  typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
-    ? 'https://shawkat-tech.up.railway.app'
-    : 'http://localhost:5000'
-)
+const rawBase = import.meta.env.VITE_API_BASE_URL ||
+  import.meta.env.VITE_BACKEND_URL ||
+  import.meta.env.VITE_SERVER_URL || (
+    typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
+      ? 'https://shawkat-tech.up.railway.app'
+      : 'http://localhost:5000'
+  )
+
+export const API_BASE = (rawBase || '').trim().replace(/\/+$/, '').replace(/\/api$/, '')
 
 // ---- Core Request Function ----
 
@@ -42,8 +46,17 @@ async function request(endpoint, options = {}) {
     }
   }
 
-  const response = await fetch(`${API_BASE}${endpoint}`, config)
-  const data = await response.json()
+  const url = `${API_BASE}${endpoint}`
+  const response = await fetch(url, config)
+
+  let data
+  const contentType = response.headers.get('content-type') || ''
+  if (contentType.includes('application/json')) {
+    data = await response.json()
+  } else {
+    const text = await response.text()
+    throw new Error(`API responded with ${response.status}: ${text.slice(0, 120)}`)
+  }
 
   if (!data.success) {
     const error = new Error(data.error?.message || 'Request failed')
