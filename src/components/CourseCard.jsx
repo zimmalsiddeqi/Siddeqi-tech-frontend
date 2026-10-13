@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Clock, ArrowRight, Star } from 'lucide-react'
 import LiveBadge from './LiveBadge'
+import { publicApi } from '../services/api'
 
 export default function CourseCard({ course }) {
   if (!course) return null
@@ -23,7 +24,11 @@ export default function CourseCard({ course }) {
   const isLive = delivery_modes.includes('live')
 
   return (
-    <Link to={`/courses/${slug}`} style={{ textDecoration: 'none' }}>
+    <Link
+      to={`/courses/${slug}`}
+      onMouseEnter={() => slug && publicApi.getCourseBySlug(slug)}
+      style={{ textDecoration: 'none' }}
+    >
       <div className="course-card">
         {/* Banner */}
         <div className="course-card-banner-wrap">

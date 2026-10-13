@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { publicApi } from '../services/api'
 import {
   Home, BookOpen, Package, Menu, X, LogOut,
   LayoutDashboard, Sparkles, ArrowRight, User, Shield
@@ -36,6 +37,14 @@ export default function Navbar() {
   const firstName = profile?.full_name?.split(' ')[0] || (isAdmin ? 'Admin' : 'Student')
   const dashboardLink = isAdmin ? '/admin' : '/portal/dashboard'
 
+  const handlePrefetch = (to) => {
+    if (to === '/courses') {
+      publicApi.getCourses({ page: 1, per_page: 9 })
+    } else if (to === '/packages') {
+      publicApi.getPackages()
+    }
+  }
+
   return (
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-inner">
@@ -56,6 +65,7 @@ export default function Navbar() {
                 <NavLink
                   to={to}
                   end={end}
+                  onMouseEnter={() => handlePrefetch(to)}
                   className={({ isActive }) => `navbar-pill-link ${isActive ? 'active' : ''}`}
                 >
                   <Icon size={15} />
